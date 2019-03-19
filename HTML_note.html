@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML note</title>
+</head>
+<body style="background-color:#E6E6FA">
+
+<!-- 标题(h1~h6) -->
+<h1 style="text-align:center">h1 标题</h1>
+<hr/>
+<h2 style="text-align:justify">h2 标题</h2>
+<h3 style="text-align:left">h3 标题</h3>
+<h4 style="text-align:right">h4 标题</h4>
+<h5>h5 标题</h5>
+<h6>h6 标题</h6>
+
+<!-- 段落(p,br) -->
+<p>这是第一段</p>
+<p>这是第二段,这个很长,在这里换行<br/>
+    换行后
+</p>
+<!--在开始标签中添加斜杠，比如 <br />，是关闭空元素的正确方法，HTML、XHTML 和 XML 都接受这种方式。-->
+<!--即使 <br> 在所有浏览器中都是有效的，但使用 <br /> 其实是更长远的保障。-->
+
+
+<!--html属性-->
+<a href="https://www.baidu.com/">这是一个链接</a>
+
+<!--html样式-->
+<h2 style="background-color:#5068ff">设置了样式颜色的标题</h2>
+<p style="background-color:green">设置了样式颜色的段落</p>
+<p style="font-family:'Source Code Pro';color:#ff47e1;font-size:20px;">设置了样式字体,颜色及大小的段落</p>
+<!--样式用;分割-->
+<!--style 替代了 align,bgcolor,font-->
+
+<!--文本格式化-->
+<!--文本格式化标签-->
+<b>[航海]</b><em>大船可以去远处探险，而小船不应该远离海岸。</em>
+<small>------</small>
+<strong>本杰明 富兰克林</strong>
+<p style="font-family:'Source Code Pro';color:#ff47e1;"> x<sup>2</sup> +
+    <ins>y<sup>2</sup></ins>
+    =
+    <del>z<sup>2</sup></del>
+</p>
+
+<!--“计算机输出”标签-->
+<code> f(n) = f(n-1) + f(n-2)</code><br/>
+<var>int s;</var><br/>
+
+<!--引用、引用和术语定义-->
+<!--http://www.w3school.com.cn/html/html_formatting.asp-->
+<!--http://www.w3school.com.cn/html/html_quotation_elements.asp-->
+
+<!--HTML 链接-->
+<a href="#tips">指向锚点</a><br/>
+<a href="http://www.w3school.com.cn/" target="_blank">Visit W3School!</a>
+<p>如果把链接的 target 属性设置为 "_blank"，该链接会在新窗口中打开。</p>
+<a name="tips">这是一个锚点</a><br/>
+
+<!--HTML图片-->
+<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552889033535&di=6cc00ea5017ebb5ef4328fc99cd111e0&imgtype=0&src=http%3A%2F%2Fi3.sinaimg.cn%2Fgm%2Fcr%2F2013%2F0910%2F1187401620.jpg"
+     alt="Big Boat"/>
+<!--更多实例-->
+<!--http://www.w3school.com.cn/html/html_images.asp-->
+
+
+<!--html表格-->
+<table border="1" summary="test">
+    <!--每一行tr分割-->
+    <tr> <!--表头-->
+        <th>Heading</th>
+        <th>Another Heading</th>
+    </tr>
+    <tr>
+        <td>row 1, cell 1</td><!--每一行的每一列用td分割-->
+        <td>row 1, cell 2</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td><!--空白占位符-->
+        <td>row 2, cell 2</td>
+    </tr>
+</table>
+</body>
+
+<!--html邮件-->
+<a href="mailto:yy@imooc.com"subject = "观了不起的盖茨比有感"&body="你好，对此评论有些想法">对此影评有何感想，发送邮件给我</a>
+
+<!--基础知识学习-->
+<!--https://www.imooc.com/learn/9-->
+</html>
