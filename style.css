@@ -1,0 +1,60 @@
+/*css样式优先级*/
+/*内联式 > 嵌入式 > 外部式*/
+
+/*格式如下*/
+/*选择器{*/
+/*样式;*/
+/*}*/
+
+
+span {
+    color: red;
+    font-size: 20px;
+}
+
+h1 {
+    color: gold;
+}
+
+/*类选择器*/
+/*.类选器名称{css样式代码;}*/
+
+.myclass {
+    color: pink;
+    font-family: "Source Code Pro";
+    /*font-size: 25px;*/
+}
+
+/*id选择器*/
+#myid {
+    color: purple;
+    font-family: "Source Code Pro";
+    /*font-size: 25px;*/
+}
+
+/*两者区别*/
+/*1. ID选择器只能在文档中使用一次。*/
+ /*与类选择器不同，在一个HTML文档中，ID选择器只能使用一次，而且仅一次。而类选择器可以使用多次。*/
+/*2. 可以使用类选择器词列表方法为一个元素同时设置多个样式。我们可以为一个元素同时设多个样式，*/
+ /*但只可以用类选择器的方法实现，ID选择器是不可以的（不能使用 ID 词列表）*/
+/*eg : <span class="class1 class2">*/
+
+
+/*css样式继承的权值,如果一个元素被指定了多个css样式,实现那个?*/
+/*p{color:red;} !*权值为1*!*/
+/*p span{color:green;} !*权值为1+1=2*!*/
+/*.warning{color:white;} !*权值为10*!*/
+/*p span.warning{color:purple;} !*权值为1+1+10=12*!*/
+/*#footer .note p{color:yellow;} !*权值为100+10+1=111*!*/
+
+/*层叠*/
+/*相同优先级下,最后写的会被样式实现*/
+
+/*p{color:red;}*/
+/*p{color:green;}*/
+/*p{color:pink;}*/
+/*最后显示的是粉色*/
+
+/*重要性*/
+/*p{color:red!important;}*/
+/*相当于权值拉满*/

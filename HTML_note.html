@@ -82,11 +82,92 @@
         <td>row 2, cell 2</td>
     </tr>
 </table>
-</body>
+
 
 <!--html邮件-->
-<a href="mailto:yy@imooc.com"subject = "观了不起的盖茨比有感"&body="你好，对此评论有些想法">对此影评有何感想，发送邮件给我</a>
+<a href="mailto:yy@imooc.com" subject="观了不起的盖茨比有感" &body="你好，对此评论有些想法">对此影评有何感想，发送邮件给我</a>
 
 <!--基础知识学习-->
 <!--https://www.imooc.com/learn/9-->
+
+
+<!--文本域-->
+<form action="save.php" method="post">
+    <label>个人简介：</label>
+    <textarea cols="50" rows="10">在这里输入内容...</textarea>
+    <input type="submit" value="确定" name="submit"/>
+    <input type="reset" value="重置" name="reset"/>
+</form>
+
+<!--表格,控件,单选,复选框,label-->
+<form>
+    <label for="male">男</label>
+    <input type="radio" name="gender" id="male"/>
+    <br/>
+    <label for="female">女</label>
+    <input type="radio" name="gender" id="female"/>
+    <br/>
+    <label for="email">输入你的邮箱地址</label>
+    <input type="email" id="email" placeholder="Enter email">
+</form>
+<form method="post" action="save.php">
+    你对什么运动感兴趣<br/>
+    <label>慢跑<input type="checkbox" name="run"></label><br/>
+    <label>登山<input type="checkbox" name="mount"></label><br/>
+    <label>篮球<input type="checkbox" name="basketball"></label><br/>
+    <input type="submit" value="确定" name="submit"/>
+    <input type="reset" value="重置" name="reset"/>
+</form>
+
+
+<link href="style.css" rel="stylesheet" type="text/css"/>
+
+<p>慕课网，<span class="myclass">超酷的互联网</span>、IT技术免费学习平台，创新的网络一站式学习、实践体验；
+    <span>服务及时贴心</span>，内容专业、<span id="myid">有趣易学</span>。专注服务互联网工程师快速成为技术高手！</p>
+
+<hr/>
+<!--子选择器-->
+<!--即大于符号(>),用于选择指定标签元素的第一代子元素。如右侧代码编辑器中的代码：-->
+<p class="first">三年级时，<span>我还<span>是</span>一个</span>胆小如鼠<span>的小女孩</span>，上课从来不敢回答老师提出的问题，
+    生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。</p>
+<!--&lt;!&ndash;子选择器只包含第一个后代&ndash;&gt; 第一代的后代会默认集成第一代的样式-->
+<!--包含选择器包含所有的后台-->
+<!--<可以通过包含选择器来指定第二代 第三代的样式>-->
+<!--# reference https://www.imooc.com/qadetail/278849-->
+<style type="text/css">
+    .first span {
+        border: 1px solid red;
+    }
+
+    .first span span {
+        border: 1px solid blue;
+    }
+
+    /*通用选择器，匹配所有标签*/
+    /*   * {color:red;}      */
+
+
+    /* 伪类选择器 */
+    /* 为鼠标滑过a表情设置样式 */
+    a:hover{
+        color:red;
+        font-size:20px;
+    }
+
+    /*分组选择符*/
+    /*为多个标签赋予同样的样式*/
+    /*h1,span{color:red;}*/
+    /*等同于*/
+    /*h1{color:red;}*/
+    /*span{color:red;}*/
+
+
+
+
+</style>
+<p class="first">三年级时，<span>我<span>是</span>是一个<span>胆小如鼠</span>的小女孩</span>，上课从来不敢回答老师提出的问题，
+    生怕回答错了老师会批评我。就一直没有这个勇气来回答老师提出的问题。学校举办的活动我也没勇气参加。</p>
+
+
+</body>
 </html>
