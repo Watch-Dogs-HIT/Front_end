@@ -3,6 +3,9 @@
 // 但通常人们会将它用于整个脚本。
 // 请确保 "use strict" 出现在脚本的最顶部，否则严格模式可能无法启用。
 
+// 全部内容总结 https://zh.javascript.info/javascript-specials
+
+
 console.log(String("变量,赋值,数据类型,类型转换及操作符"));
 // 变量
 let message;
@@ -122,11 +125,16 @@ function ask(question, yes, no) {
     if (confirm(question)) yes()
     else no();
 }
+
 // 匿名函数
 ask(
     "Do you agree?",
-    function() { alert("You agreed."); },
-    function() { alert("You canceled the execution."); }
+    function () {
+        alert("You agreed.");
+    },
+    function () {
+        alert("You canceled the execution.");
+    }
 );
 
 // 函数声明 vs 函数表达式
