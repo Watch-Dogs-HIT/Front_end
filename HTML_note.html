@@ -77,6 +77,10 @@
         <td>row 1, cell 1</td><!--每一行的每一列用td分割-->
         <td>row 1, cell 2</td>
     </tr>
+    <tr> <!--表头-->
+        <th>Heading</th><!--表头的每一列用th分割-->
+        <th>Another Heading</th>
+    </tr>
     <tr>
         <td>&nbsp;</td><!--空白占位符-->
         <td>row 2, cell 2</td>
@@ -110,7 +114,8 @@
     <label for="email">输入你的邮箱地址</label>
     <input type="email" id="email" placeholder="Enter email">
 </form>
-<form method="post" action="save.php">
+<!--复选-->
+<form method="post" action="save.js">
     你对什么运动感兴趣<br/>
     <label>慢跑<input type="checkbox" name="run"></label><br/>
     <label>登山<input type="checkbox" name="mount"></label><br/>
@@ -149,9 +154,9 @@
 
     /* 伪类选择器 */
     /* 为鼠标滑过a表情设置样式 */
-    a:hover{
-        color:red;
-        font-size:20px;
+    a:hover {
+        color: red;
+        font-size: 20px;
     }
 
     /*:hover 选择器用于选择鼠标指针浮动在上面的元素。*/
@@ -163,15 +168,12 @@
     /*注释：在 CSS 定义中，:hover 必须位于 :link 和 :visited 之后（如果存在的话），这样样式才能生效。*/
 
 
-
     /*分组选择符*/
     /*为多个标签赋予同样的样式*/
     /*h1,span{color:red;}*/
     /*等同于*/
     /*h1{color:red;}*/
     /*span{color:red;}*/
-
-
 
 
 </style>
