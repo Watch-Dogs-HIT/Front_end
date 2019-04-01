@@ -5,6 +5,162 @@
     <title>learn javascript note #2</title>
 </head>
 <body>
-<script src="learn_2.js"></script>
+<!--document.getElementById 或者只使用 id-->
+<div id="elem">
+    <div id="elem-content">Element</div>
+</div>
+
+<!--<script>-->
+<!--    alert(window.elem); // accessing global variable like this also works-->
+<!--    // 对于 elem-content 会稍微有些复杂-->
+<!--    // 因为里面有破折号，所以不是一个变量名-->
+<!--    alert(window['elem-content']); // ...但可以使用方括号 [...]-->
+<!--    let elem = document.getElementById('elem');-->
+<!--    alert(elem); // DOM-element with id="elem"-->
+<!--    elem.style.background = 'red';-->
+<!--</script>-->
+
+<!--note:-->
+<!--id 必须唯一，文档中给定的 id 只能有唯一一个元素。-->
+<!--如果有多个元素具有同名 id，那么对应方法的行为将不可预测。-->
+<!--浏览器将随机返回其他的一个。因此未来保证 id 的唯一性，请严格遵守规则。-->
+
+
+<!--getElementsBy*-->
+<!--也有其他的方法来搜索节点：-->
+<!--elem.getElementsByTagName(tag) 用给定的标签来查找元素，并返回它们的集合。tag 参数也可以是“任何标签”的 "*"。-->
+
+<table id="table">
+    <tr>
+        <td>Your age:</td>
+        <td>
+            <label>
+                <input type="radio" name="age" value="young" checked> less than 18
+            </label>
+            <label>
+                <input type="radio" name="age" value="mature"> from 18 to 50
+            </label>
+            <label>
+                <input type="radio" name="age" value="senior"> more than 60
+            </label>
+        </td>
+    </tr>
+</table>
+
+<!--<script>-->
+<!--    let inputs = document.getElementById('table').getElementsByTagName('input'); // 查找所有input标签-->
+
+<!--    for (let input of inputs) {-->
+<!--        alert(input.value + ': ' + input.checked);-->
+<!--    }-->
+<!--</script>-->
+
+<!--querySelectorAll-->
+<!--elem.querySelectorAll(css) 的调用将返回与给定 -->
+<!--CSS 选择器匹配 elem 中的所有元素。这是最常用和最有力的方法。-->
+
+
+<!--我们将查找所有为最后一个子元素的 <li> 元素：-->
+<ul>
+    <li>The</li>
+    <li>test</li>
+</ul>
+<ul>
+    <li>has</li>
+    <li>passed</li>
+</ul>
+<!--<script>-->
+<!--    let elements = document.querySelectorAll('ul > li:last-child');-->
+
+<!--    for (let elem of elements) {-->
+<!--        alert(elem.innerHTML); // "test", "passed"-->
+<!--    }-->
+<!--</script>-->
+
+<!--console.log(elem) 显示 DOM 元素树。-->
+<!--console.dir(elem) 将元素视为 DOM 对象，以便更好地探究它的属性。-->
+<!--给定一个 DOM 节点，我们可以从 tagName 属性中读取它的标记名：-->
+<!--<script src="learn_2.js"></script>-->
+
+<!--innerHTML: the contents-->
+<!--innerHTML 属性允许将元素中的 HTML 作为字符串来获取。-->
+<!--我们也可以修改它。因此，这是改变页面最有效的方法之一。-->
+<!--该示例显示了 document.body 的内容，然后完全替换它：-->
+
+<p>A paragraph</p>
+<div>A div</div>
+
+<script>
+    alert(document.body.innerHTML); // read the current contents
+    document.body.innerHTML = 'The new BODY!'; // replace it
+</script>
+
+<!--outerHTML：元素的完整 HTML-- : = <tab> + innerHTML + </tag>-->
+<div id="elem1">Hello <b>World</b></div>
+<script>
+    alert(elem1.outerHTML); // <div id="elem">Hello <b>World</b></div>
+</script>
+
+hello
+<!-- Comment -->
+<script>
+    let text = document.body.firstChild;
+    alert(text.data); // Hello
+
+    let comment = text.nextSibling;
+    alert(comment.data); // Comment
+</script>
+
+<!--textContent：纯文本-->
+<!--textContent 提供对元素中的 text 的访问权限：只提供文本，去掉所有的 <tags>。-->
+
+<div id="news">
+    <h1>Headline!</h1>
+    <p>Martians attack people!</p>
+</div>
+
+<script>
+    // Headline! Martians attack people!
+    alert(news.textContent);
+</script>
+
+<!--textContent相比innerHTML安全-->
+<div id="elem11"></div>
+<div id="elem22"></div>
+<!--一个根据输入修改页面内容的例子-->
+<script>
+    let name = prompt("What's your name?", "<b>Winnie-the-pooh!</b>");
+
+    elem11.innerHTML = name;
+    elem22.textContent = name;
+</script>
+
+总结
+每个 DOM 节点都属于某个类。这些类形成层次结构。完整的属性和方法集是继承的结果。
+
+<!--DOM 节点的属性主要有：-->
+<!--nodeType-->
+<!--我们可以从 DOM 对象类中获取 nodeType，但我们通常只需要查看它是文本节点还是元素节点。-->
+<!--nodeType 属性就可以我们的需求。它有数值，最重要的是：1 —— 是元素，3 —— 是文本。只读。-->
+
+<!--nodeName/tagName-->
+<!--对于元素来说，标记名（除了 XML 模式外都要大写）。-->
+<!--对于非元素节点，nodeName 则描述了它是什么。只读。-->
+
+<!--innerHTML-->
+<!--HTML 的元素内容。可以被修改。-->
+
+<!--outerHTML-->
+<!--元素的完整 HTML。写入 elem.outerHTML 的操作不会涉及 elem 自身。相反，它会在外部上下文中被替换成新的 HTML。-->
+
+<!--nodeValue/data-->
+<!--非元素节点（文本、注释）内容。两者几乎一样，我们通常使用 data。允许被修改。-->
+
+<!--textContent-->
+<!--元素中的文本，基本上是 HTML 减去所有 <tags>。将文本写入元素中，并把所有特殊字符和标记完全视为文本。可以安全地插入用户生成的文本，防止不必要的 HTML 插入。 -->
+
+<!--hidden-->
+<!--当设置为 true 时，执行与 CSS display:none 相同的操作。-->
+
 </body>
 </html>
