@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="main page">
+<script>
+    // 添加类
+    document.body.classList.add('article');
+    alert(document.body.className); // main page article
+    // 修改样式
+    document.body.style.backgroundColor = prompt('background color?', 'green');
+    // 重置样式属性
+    // if we run this code, the <body> "blinks"
+    document.body.style.display = "none"; // hide
+    setTimeout(() => document.body.style.display = "", 1000); // 恢复正常
+</script>
+
+<!--总结-->
+<!--在管理 class 时，有两个 DOM 属性：-->
+
+<!--className —— 字符串值可以很好地管理整个类集合。-->
+<!--classList —— 拥有 add/remove/toggle/contains 方法的对象可以很好地支持单独的类。-->
+<!--改变样式：-->
+
+<!--style 属性是一个带有 camelCased 样式的对象。对它的读取和修改 "style" 属性中的单个属性等价。-->
+<!--要六级如果应用 important 和其他稀有内容 —— 在 MDN 上有一个方法列表。-->
+<!--style.cssText 属性对应于整个“样式”属性，即完整的样式字符串。-->
+<!--获取已经解析的样式（对应于所有类，在应用所有 CSS 并计算最终值后）：-->
+
+<!--getComputedStyle(elem[, pseudo]) 返回与 style 对象类似且包含了所有类的对象，是只读的。-->
+
+<!--图片的元素和滚动-->
+<!--https://zh.javascript.info/size-and-scroll-->
+
+<!--Window 的尺寸和滚动-->
+<!--https://zh.javascript.info/size-and-scroll-window#chuang-kou-de-kuan-du-gao-du-->
+<!--总结-->
+<!--几何：-->
+
+<!--文档可视范围的宽度/高度（内容区域的宽高）：document.documentElement.clientWidth/Height-->
+
+<!--整个文档的宽度/高度，包括滚动区域外的部分：-->
+
+<!--let scrollHeight = Math.max(-->
+<!--document.body.scrollHeight, document.documentElement.scrollHeight,-->
+<!--document.body.offsetHeight, document.documentElement.offsetHeight,-->
+<!--document.body.clientHeight, document.documentElement.clientHeight-->
+<!--);-->
+<!--滚动：-->
+
+<!--读取当前的滚动：window.pageYOffset/pageXOffset-->
+
+<!--改变当前的滚动：-->
+
+<!--window.scrollTo(pageX,pageY) — 绝对定位-->
+<!--window.scrollBy(x,y) — 相对当前位置的滚动-->
+<!--elem.scrollIntoView(top) — 滚动到正好elem可视的位置（elem 与窗口的顶部/底部对齐）-->
+
+<!--坐标-->
+<!--总结-->
+<!--页面上的任何点都有坐标：-->
+
+<!--相对于窗口的坐标 — elem.getBoundingClientRect()。-->
+<!--相对于文档的坐标 — elem.getBoundingClientRect()` 加上当前页面滚动的长度。-->
+<!--窗口坐标非常适合和 position:fixed 一起使用，文档坐标非常适合和 position:absolute 一起使用。-->
+
+<!--这两个坐标系统有它们各自的“优点”和“缺点”，有些时候我们需要使用其中一个或另一个，就像 CSS position 中的 absolute 和 fixed 那样。-->
+</body>
+
+</html>
