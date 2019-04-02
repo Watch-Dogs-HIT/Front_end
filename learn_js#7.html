@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--keydown 和 keyup-->
+<!--当键被按下时，keydown 事件会发生，而当键被释放时，keyup 事件会发生。-->
+
+<!--demo:电话号码框-->
+<input onkeydown="return checkPhoneKey(event.key)" placeholder="Phone, please" type="tel">
+<script>
+    function checkPhoneKey(key) {
+        return (key >= '0' && key <= '9') || key == '+' || key == '(' || key == ')' || key == '-' ||
+            key == 'ArrowLeft' || key == 'ArrowRight' || key == 'Delete' || key == 'Backspace';
+    }
+</script>
+<!--总结-->
+<!--按一个键总是会产生一个键盘事件，无论是符号键还是特殊键，-->
+<!--比如 Shift 或 Ctrl 等。唯一的例外是 Fn，它有时会出现在笔记本电脑键盘上。-->
+<!--它没有键盘事件，因为它通常在比 OS 低的级别上实现的。-->
+
+<!--键盘事件：-->
+<!--keydown —— 长久按键（如果按下长键则自动重复），-->
+<!--keyup —— 释放按键时。-->
+
+<!--主键盘事件属性：-->
+<!--code —— “按键代码”（"KeyA"、"ArrowLeft" 等），具体到键盘上键的物理位置。-->
+<!--key —— 非字符键的字符（"A"、"a" 等），通常具有和 code 一样的值。-->
+<!--过去，键盘事件有时用于跟踪用户在表单字段中的输入。这很不可靠，因为输入源可以不同。-->
+<!--我们有 input 和 change 事件来处理任何输入（之后我们会在 事件：change、input、cut、copy 和 paste 章节中作进一步介绍）。-->
+<!--它们在任何输入后触发，包括鼠标或语音识别。-->
+
+<!--当我们真正想要键盘时，我们应该使用键盘事件。比如，对热键或特殊键作出反应。-->
+
+<!--demo:同时按下Q+W执行一个函数-->
+<p>Press "Q" and "W" together (can be in any language).</p>
+<script>
+
+    function runOnKeys(func, ...codes) {
+        let pressKeySet = new Set([]);
+
+        document.addEventListener('keydown', function (event) {
+            pressKeySet.add(event.code);
+            for (let code of codes) { // are all keys in the set?
+                if (!pressKeySet.has(code)) {
+                    return;
+                }
+            }
+
+            pressKeySet.clear();
+            func();
+        });
+
+        document.addEventListener('keyup', function (event) {
+            pressKeySet.delete(event.code);
+        });
+
+    }
+
+    runOnKeys(
+        () => alert("Hello!"),
+        "KeyQ",
+        "KeyW"
+    );
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标事件基础</title>
+</head>
+<body>
+<!--鼠标事件基础-->
+
+<!--鼠标事件类型-->
+<!--我们可以将鼠标事件分成两类：“简单”和“复杂”-->
+
+<!--简单事件-->
+<!--最常用的简单事件是：-->
+
+<!--mousedown/mouseup-->
+<!--在元素上单击/释放鼠标按钮。-->
+<!--mouseover/mouseout-->
+<!--鼠标指针从一个元素上移入/出。-->
+<!--mousemove-->
+<!--鼠标每次移动到元素上时都会触发事件。-->
+<!--…还有其他几种事件类型，我们稍后会讨论它们。-->
+
+<!--复杂事件-->
+<!--click-->
+<!--如果使用鼠标左键，则在 mousedown 及 mouseup 相继触发后触发该事件。-->
+<!--contextmenu-->
+<!--如果使用鼠标右键，则在 mousedown 后触发。-->
+<!--dblclick-->
+<!--在对元素进行双击后触发。-->
+<!--复杂事件是由简单事件组成的，因此理论上我们可以没有它们而运转。但它们的存在却给我们提供了极大的便利。-->
+
+<!--事件顺序-->
+<!--一个动作可能会触发多个事件。-->
+
+<!--比如，在按下鼠标按钮时，单击会首先触发 mousedown，然后释放鼠标按钮时，会触发 mouseup 和 click。-->
+
+<!--在单个动作触发多个事件时，它们的顺序是固定的。也就是说会遵循 mousedown → mouseup → click 的顺序。-->
+<!--事件按照相同的顺序被处理：onmouseup 在 onclick 运行之前完成。-->
+
+<!--总结-->
+<!--鼠标事件有如下属性：-->
+
+<!--按钮：which。-->
+
+<!--修饰符键（true 如果被按压）：altKey、ctrlKey、shiftKey 和 metaKey（Mac）。-->
+
+<!--如果想要处理 Ctrl，那么不要忘记 Mac 用户，他们使用的是 Cmd，所以最好检查 if (e.metaKey || e.ctrlKey)。-->
+<!--窗口相对坐标：clientX/clientY。-->
+
+<!--文档相对坐标：pageX/pageY。-->
+
+<!--处理文本选择虽然也是不必要的点击副作用，但是却很重要。-->
+
+<!--还有几种可以做到这一点的方法，比如：-->
+
+<!--CSS 属性 user-select:none（带有浏览器前缀）完全禁用文本选择。-->
+<!--使用 getSelection().removeAllRanges() 取消选择后的内容。-->
+<!--处理 mousedown 并阻止默认操作（通常是最好的选择）。-->
+
+<!--移动：mouseover/out，mouseenter/leave-->
+<!--总结-->
+<!--我们讲述了 mouseover、mouseout、mousemove、mouseenter 和 mouseleave 事件。-->
+
+<!--值得注意的事情：-->
+
+<!--鼠标的快速移动可以使 mouseover, mousemove, mouseout 跳过一些中间元素。-->
+<!--mouseover/out 事件和 mouseenter/leave 事件有一个额外的目标：relatedTarget。这是作为起点/终点的元素，是对 target 的补充。-->
+<!--即使从父元素转到子元素时，mouseover/out 也会被触发。它们假设鼠标一次只会移入一个元素 —— 最深的那个。-->
+<!--mouseenter/leave 事件不会冒泡，而且当鼠标进入子元素时也不会被触发。它们只关注鼠标在整个元素的内部还是外部。-->
+
+<style>
+    body {
+        height: 2000px;
+        /* the tooltip should work after page scroll too */
+    }
+
+    .tooltip {
+        position: fixed;
+        z-index: 100;
+
+        padding: 10px 20px;
+
+        border: 1px solid #b3c9ce;
+        border-radius: 4px;
+        text-align: center;
+        font: italic 14px/1.3 arial, sans-serif;
+        color: #333;
+        background: #fff;
+        box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+    }
+
+    #house {
+        margin-top: 50px;
+        width: 400px;
+        border: 1px solid brown;
+    }
+
+    #roof {
+        width: 0;
+        height: 0;
+        border-left: 200px solid transparent;
+        border-right: 200px solid transparent;
+        border-bottom: 20px solid brown;
+        margin-top: -20px;
+    }
+
+    p {
+        text-align: justify;
+        margin: 10px 3px;
+    }
+</style>
+
+
+<div data-tooltip="Here is the house interior" id="house">
+    <div data-tooltip="Here is the roof" id="roof"></div>
+
+    <p>Once upon a time there was a mother pig who had three little pigs.</p>
+    <p>The three little pigs grew so big that their mother said to them, "You are too big to live here any longer.
+        You must go and build houses for yourselves. But take care that the wolf does not catch you."</p>
+    <p>The three little pigs set off. "We will take care that the wolf does not catch us," they said.</p>
+    <p>Soon they met a man.
+        <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a>
+    </p>
+
+</div>
+
+<script>
+    let tooltip;
+
+    document.onmouseover = function (event) {
+        let anchorElem = event.target.closest('[data-tooltip]'); // 获取到现在选择的元素,并判断是否有data-tooltip属性
+        if (!anchorElem)
+            return;
+        tooltip = showTooltip(anchorElem, anchorElem.dataset.tooltip);
+    };
+
+    document.onmouseout = function () { // 移出的时候删除这个div元素
+        if (tooltip) {
+            tooltip.remove();
+            tooltip = false;
+        }
+    };
+
+
+    function showTooltip(anchorElem, html) {
+        let tooltipElem = document.createElement('div');
+        tooltipElem.className = 'tooltip';
+        tooltipElem.innerHTML = html;
+        // 添加这个元素
+        document.body.append(tooltipElem);
+        // 获取当前元素相对于视窗的位置
+        let coords = anchorElem.getBoundingClientRect();
+        // 修改位置
+        let left = coords.left + (anchorElem.offsetWidth - tooltipElem.offsetWidth) / 2;
+        if (left < 0) left = 0;
+
+        let top = coords.top - tooltipElem.offsetHeight - 5;
+        if (top < 0) {
+            top = coords.top + anchorElem.offsetHeight + 5;
+        }
+        tooltipElem.style.left = left + 'px';
+        tooltipElem.style.top = top + 'px';
+        return tooltipElem;
+    }
+
+
+</script>
+
+<!--鼠标缩放-->
+<!--https://zh.javascript.info/mouse-drag-and-drop-->
+
+<!--滚动-->
+<style>
+    body,
+    html {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    #matrix {
+        width: 400px; /*确定宽度 */
+        margin: auto;
+        overflow: auto;
+        text-align: justify;
+    }
+
+    #arrowTop {
+        height: 9px;
+        width: 14px;
+        color: green;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        cursor: pointer;
+    }
+
+    #arrowTop::before {
+        content: '▲';
+    }
+
+</style>
+
+<div id="matrix">
+    <script>
+        for (let i = 0; i < 2000; i++) document.writeln(i)
+    </script>
+</div>
+
+<div id="arrowTop" hidden></div>
+
+<script>
+
+    arrowTop.onclick = function () {// arrowTop点击事件,点击 -> 将页面y轴缩放至为0
+        window.scrollTo(pageXOffset, 0);
+        // after scrollTo, there will be a "scroll" event, so the arrow will hide automatically
+    };
+
+    window.addEventListener('scroll', function () {
+        arrowTop.hidden = (pageYOffset < document.documentElement.clientHeight); // 如果页面的y轴的offeset小于dom当前的高度
+        // 就显示这个名为arrow的div元素
+    });
+</script>
+
+
+<!--页面生命周期事件：-->
+
+<!--当 DOM 准备就绪时，DOMContentLoaded 事件就会在 document 上触发。在这个阶段，我们可以将 JavaScript 应用于元素。-->
+<!--除了 async 或 defer 的脚本外，所有的脚本都会被执行。-->
+<!--图像和其他资源仍然可以继续被加载。-->
+<!--当页面和所有资源被加载时，load 事件会在 window 上被触发。我们很少使用它，因为通常没有必要去等待那么久。-->
+<!--当用户想要离开页面时，beforeunload 事件会在 window 上被触发。如果他返回一个字符串，那么浏览器就会以问题的形式向用户确认是否真的要离开。-->
+<!--当用户最终离开时，unload 事件会在 window 上被触发，在处理器中，我们只能做一些简单的事情，不会涉及到延迟或询问用户。正是由于这个限制，它很少被使用。-->
+<!--document.readyState 是文档的当前状态，可以在 readystatechange 事件中跟踪变更：-->
+<!--loading —— 文档正在被加载。-->
+<!--interactive —— 文档被解析，大概是与 DOMContentLoaded 同时发生，而不是在它之前发生。-->
+<!--complete —— 文档和资源被加载，与 window.onload 同时发生，而不是在它之前发生。-->
+
+<!--总结-->
+<!--<img> 图像、外部样式表、脚本和其他资源都提供了 load 和 error 事件来追踪它们的加载：-->
+
+<!--load 在成功加载时被触发。-->
+<!--error 在加载失败时被触发。-->
+<!--只有 <iframe> 特殊：出于历史原因，即使页面没有被找到，它总会触发 load 来完成任何加载。-->
+
+</body>
+</html>
