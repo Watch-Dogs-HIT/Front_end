@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单提交：事件和方法提交</title>
+</head>
+<body>
+<!--当提交表单时，submit 事件就会触发，它通常用于在将结果发送到服务器之前进行表单校验，或者中断提交，然后用 JavaScript 来处理。-->
+<!--form.submit() 方法允许从 JavaScript 里发送表单。使用此方法，我们可以动态地创建表单，并将其发送给服务器。-->
+
+<form onsubmit="alert('submit!');return false">
+    First: Enter in the input field <input type="text" value="text"><br>
+    Second: Click "submit": <input type="submit" value="Submit">
+</form>
+
+<!--提交表单有两种方法：-->
+<!--第一种 — 点击 <input type="submit"> 或者 <input type="image">。-->
+<!--第二种 — 在输入框内按下 Enter 回车键。-->
+<!--两种行为都可以触发表单的 submit 事件。处理器可以检查数据，如果有错误，就显示出来，-->
+<!--并且调用 event.preventDefault()，这样表单就不会再提交给服务端了。-->
+
+<!--方法：submit-->
+<!--如果要手动向服务器提交表单，我们可以调用 form.submit()。-->
+
+<!--demo:-->
+
+<h2>Click the button below</h2>
+<input type="button" value="Click to show the form" id="show-button">
+
+
+<div id="prompt-form-container">
+    <form id="prompt-form">
+        <div id="prompt-message"></div>
+        <input name="text" type="text">
+        <input type="submit" value="Ok">
+        <input type="button" name="cancel" value="Cancel">
+    </form>
+</div>
+
+<script>
+    function showCover() {
+        let coverDiv = document.createElement('div');
+        coverDiv.id = 'cover-div';
+        document.body.style.overflowY = 'hidden';
+        document.body.append(coverDiv);
+    }
+
+    function hideCover() {
+        document.getElementById('cover-div').remove();
+        document.body.style.overflowY = '';
+    }
+
+    function showPrompt(text, callback) {
+        showCover(); // 展示那个div模块
+        let form = document.getElementById('prompt-form');
+        let container = document.getElementById('prompt-form-container');
+        document.getElementById('prompt-message').innerHTML = text;
+        form.text.value = '';
+
+        function complete(value) { // 推出函数
+            hideCover(); // 删除cover div
+            container.style.display = 'none'; // 窗口隐藏
+            document.onkeydown = null; // 删除文档响应按键函数
+            callback(value); // 调用回掉函数
+        }
+
+        form.onsubmit = function () { // 表单提交函数
+            let value = form.text.value;
+            if (value == '') return false; // ignore empty submit
+            complete(value);
+            return false;
+        };
+
+        form.cancel.onclick = function () {
+            complete(null);
+        };
+
+        document.onkeydown = function (e) { // 响应esa键
+            if (e.key == 'Escape') {
+                complete(null);
+            }
+        };
+
+        let lastElem = form.elements[form.elements.length - 1];
+        let firstElem = form.elements[0];
+
+        // 响应tab键切换元素
+        lastElem.onkeydown = function (e) {
+            if (e.key == 'Tab' && !e.shiftKey) {
+                firstElem.focus();
+                return false;
+            }
+        };
+
+        firstElem.onkeydown = function (e) {
+            if (e.key == 'Tab' && e.shiftKey) {
+                lastElem.focus();
+                return false;
+            }
+        };
+
+        container.style.display = 'block';
+        form.elements.text.focus();
+    }
+
+    document.getElementById('show-button').onclick = function () {
+        showPrompt("Enter something<br>...smart :)", function (value) {
+            alert("You entered: " + value);
+        });
+    };
+</script>
+</body>
+</html>

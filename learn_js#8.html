@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单属性和方法</title>
+</head>
+<body>
+
+<form name="my">
+    <input name="one" value="1">
+    <input name="two" value="2">
+    <input type="radio" name="age" value="10">
+    <input type="radio" name="age" value="20">
+</form>
+<script>
+    // 获取表单
+    let form = document.forms.my; // <form name="my"> 元素
+    // 获取表单中的元素
+    let elem = form.elements.one; // <input name="one"> 元素
+    console.log(elem.value);
+    // 获取同名元素列表
+    let ageElems = form.elements.age;
+    for (let age of ageElems)
+        alert(age.value)
+
+</script>
+
+<!--反向引用：element.form-->
+<!--对于任何元素，其对应的表单都可以通过 element.form 访问到。因此不仅表单可以引用所有元素，元素也可以引用表单。-->
+<form id="form">
+    <input type="text" name="login">
+</form>
+
+<script>
+    // form -> element
+    let login = form.login;
+
+    // element -> form
+    alert(login.form); // HTMLFormElement
+</script>
+
+<!--表单元素-->
+<!--input 和 textarea-->
+<!--通常来说，我们可以使用 input.value 或者 input.checked 来访问复选框的值。-->
+<!--请注意我们永远不应该使用 textarea.innerHTML：它只储存了最初在页面上的 HTML 内容，而不是当前的。-->
+
+
+<!--select 和 option-->
+<!--一个 <select> 元素有 3 个重要的属性：-->
+
+<!--select.options —— <option> 元素的集合，-->
+<!--select.value —— 所选选项的值，-->
+<!--select.selectedIndex —— 所选选项的索引。-->
+
+<!--所以我们会有三种方式来设置一个 <select> 元素的值：-->
+<!--1. 找到所需要的 <option> 元素之后设置 option.selected 为 true。-->
+<!--2. 设置 select.value 为对应的值。-->
+<!--3. 设置 select.selectedIndex 为对应选项的索引。-->
+<select id="select">
+    <option value="apple">Apple</option>
+    <option value="pear">Pear</option>
+    <option value="banana">Banana</option>
+</select>
+
+<script>
+    // 所有这三行做的是同一件事
+    select.options[2].selected = true;
+    select.selectedIndex = 2;
+    select.value = 'banana';
+</script>
+
+<!--总结-->
+<!--表单导航：-->
+
+<!--document.forms-->
+<!--一个表单元素可以通过 document.forms[name/index] 访问到。-->
+<!--form.elements-->
+<!--表单元素以通过 form.elements[name/index] 的方式访问，或者也可以使用 form[name/index]。elements 属性也适用于 <fieldset>。-->
+<!--element.form-->
+<!--元素通过 form 属性来访问它们所属的表单。-->
+<!--值可以通过 input.value，textarea.value，select.value 等来获取到，对于单选框和复选框来说还可以使用 input.checked。-->
+
+<!--对于 <select> 元素我们可以通过索引 select.selectedIndex 来获取它的值，
+也可以使用选项集合 select.options。该元素和其它元素的完整规范可以看 https://html.spec.whatwg.org/multipage/forms.html。-->
+
+<!--demo1:在 select 元素中增加一个选项-->
+<select id="genres">
+    <option value="rock">Rock</option>
+    <option value="blues" selected>Blues</option>
+</select>
+
+<script>
+    // 1. 显示所选选项的值和文本。
+    let select_genres = document.getElementById("genres");
+    let selectedOption = select_genres.options[select_genres.selectedIndex];
+    alert(selectedOption.value);
+
+    // 2. 增加一个选项：<option value="classic">Classic</option>。
+    let new_option = new Option("classic", "Classic");
+    select_genres.append(new_option);
+
+    // 3. 使之变为可选的。
+    new_option.selected = true;
+</script>
+
+<!--聚焦：focus/blur-->
+<!--当一个元素被用户点击或使用键盘上的 Tab 选中时，该元素会被聚焦。-->
+<!--当网页加载时 HTML autofocus 属性也可以让一个焦点落在元素上，不仅如此，还有其它途径可以获取焦点。-->
+
+<!--聚焦通常表示：“这里准备好接受数据了”，而这也正是我们运行代码去初始化或加载一些东西的时候。-->
+
+<!--失去焦点的时刻可能更为重要。它可能发生在用户点击网页其它地方或者点击 Tab 跳转到下一个表单域，亦或是其它途径的时候。-->
+<!--失去焦点通常表示：“数据已经完成输入了”，所以我们可以运行代码来检查它，甚至可以是保存到服务器上。-->
+
+<!--当操作聚焦事件的时候有一些重要的特性需要注意。我们会尽量在这里介绍。-->
+<!--focus/blur 事件-->
+<!--当元素聚焦时它的 focus 事件被触发，-->
+<!--还有当元素失去焦点的时候它的 blur 事件被触发。-->
+
+<!--让我们使用它们去校验一个输入字段。-->
+<!--在下面的例子中：-->
+<!--blur 事件处理器会检查这个域有没有输入邮箱，如果没有的话展示一个错误信息。-->
+<!--focus 事件处理器隐藏错误信息（当失去焦点的时候 blur 事件处理器还会再检查一遍）：-->
+
+<style>
+    .invalid { border-color: red; }
+    #error { color: red }
+</style>
+
+Your email please: <input type="email" id="input">
+
+<div id="error"></div>
+
+<script>
+    // 验证失去焦点(输出完成之后的内容是否含有@,没有就修改样式
+    input.onblur = function() {
+        if (!input.value.includes('@')) { // not email
+            input.classList.add('invalid');
+            error.innerHTML = 'Please enter a correct email.'
+        }
+    };
+    // 获得焦点就删除内容和样式
+    input.onfocus = function() {
+        if (this.classList.contains('invalid')) {
+            // remove the "error" indication, because the user wants to re-enter something
+            this.classList.remove('invalid');
+            error.innerHTML = "";
+        }
+    };
+</script>
+
+<!--总结-->
+<!--元素获得/失去焦点会触发 focus 和 blur 事件。-->
+
+<!--它们的特性是：-->
+
+<!--它们不向上冒泡。但是可以在捕获阶段触发或者使用 focusin/focusout。-->
+<!--大多数元素默认不支持聚焦。使用 tabindex 可以让它们变成可聚焦的。-->
+<!--可以通过 document.activeElement 来访问正在被聚焦的元素。-->
+
+<!--事件：change-->
+<!--change 事件是在元素变化结束之后触发的。-->
+<!--对于文本输入框来说，当其失去焦点的时候就会触发 change 事件。-->
+<!--例如，当我们在下面的文本区域中输入的时候，change 事件不会被触发。-->
+<!--但是当我们将焦点移到别处时，例如点击按钮，就会触发 change 事件：-->
+<input type="text" onchange="alert(this.value)">
+<input type="button" value="Button">
+
+<!--事件：input-->
+<!--每当输入的值发生改变时，就会触发 input 事件。-->
+<input type="text" id="input1"> oninput: <span id="result"></span>
+<script>
+    input.oninput = function() {
+        result.innerHTML = input1.value;
+    };
+</script>
+<!--总结-->
+<!--数据变化事件:-->
+<!--事件	描述	特性-->
+<!--change	值被改变。	对于文本输入框，当失去焦点时触发。-->
+<!--input	文本输入框的每次变化。	立即触发，与 change 不同。-->
+<!--cut/copy/paste	剪贴/拷贝/粘贴行为。	行为可以被阻止。event.clipboardData 属性可以读写剪贴板。-->
+
+
+
+</body>
+</html>
