@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>jQuery 遍历</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+</head>
+<body>
+
+<script>
+    // jQuery 遍历-祖先
+    // parent() 方法返回被选元素的直接父元素。 // 往上找第一个父元素
+    $("span").parent().css({"color":"red","border":"2px solid red"}); // 第一个父元素设置css
+    // parents() 方法返回被选元素的所有祖先元素，它一路向上直到文档的根元素 (<html>)。 所有父元素
+    $("span").parents().css({"color":"red","border":"2px solid red"}); // 所有父元素都设置css
+    // parentsUntil() 方法返回介于两个给定元素之间的所有祖先元素。
+    $("span").parentsUntil("div").css({"color":"red","border":"2px solid red"}); // 从span到div之间的父元素集合(不包括span和div)
+
+    // jQuery 遍历-后代
+    // children() 方法返回被选元素的[第一个后代]所有直接子元素。
+    $("div").children().css({"color":"red","border":"2px solid red"}); // 只选第一代子元素集合
+    $("div").children("p.1").css({"color":"red","border":"2px solid red"}); // 直选第一代子元素 且 class = 1
+    // find() 方法返回被选元素的后代元素，一路向下直到最后一个后代。
+    $("div").find("*").css({"color":"red","border":"2px solid red"}); // 所有后代
+    $("div").find("span").css({"color":"red","border":"2px solid red"}); // 所有span后代
+
+    // jQuery 遍历 - 同胞(siblings) 1 ,2 ,[3] 4, 5
+    // siblings() 方法返回被选元素的所有同胞元素。 1, 2, 4, 5
+    // next() 方法返回被选元素的下一个同胞元素     4
+    // nextAll() 方法返回被选元素的所有跟随的同胞元素。 4,5
+    // nextUntil() 方法返回介于两个给定参数之间的所有跟随的同胞元素。 [3].nextUntil(5) = 4
+    // prev(), prevAll() & prevUntil() 方法 反向
+
+    // jQuery 遍历- 过滤
+    // 缩小搜索元素的范围
+    // 三个最基本的过滤方法是：first(), last() 和 eq()，它们允许您基于其在一组元素中的位置来选择一个特定的元素。
+
+    // first() 方法返回被选元素的首个元素。
+    // 下面的例子选取首个 <div> 元素内部的第一个 <p> 元素：
+    //
+    $(document).ready(function(){
+        $("div p").first();
+    });
+
+</script>
+
+
+</body>
+</html>
