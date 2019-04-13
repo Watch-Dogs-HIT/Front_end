@@ -6,6 +6,7 @@
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
     </script>
     <script>
+        // demo
         $(document).ready(function(){
             $("p").click(function(){
                 $(this).hide();
@@ -17,5 +18,47 @@
 <p>如果你点我，我就会消失。</p>
 <p>继续点我!</p>
 <p>接着点我!</p>
+<script>
+    // jQuery 函数格式
+    // $(function(){
+    //     // 开始写 jQuery 代码...
+    // });
+
+    // jQuery 选择器
+    $("p")
+    $("#test")
+    $(".test")
+    // more http://www.runoob.com/jquery/jquery-selectors.html
+
+
+    // jQuery 事件 click dblclick mouseenter mouseleave mousedown mouseup hover() focus blur
+    $("p").click(function(){
+        $(this).hide();
+    });
+
+    // jQuery 效果- 隐藏和显示
+    $("#hide").click(function(){
+        $("p").hide(); // 隐藏
+    });
+    $("#show").click(function(){
+        $("p").show(); // 显示
+    });
+    $("button").click(function(){
+        $("p").toggle(); // 隐藏/显示 切换
+    });
+
+    // jQuery 方法链接
+    $("#p1").css("color","red").slideUp(2000).slideDown(2000);
+</script>
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
